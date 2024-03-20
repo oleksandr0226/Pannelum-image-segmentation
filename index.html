@@ -1,0 +1,362 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="./pannellum.css" />
+    <script type="text/javascript" src="./libpannellum.js"></script>
+    <script type="text/javascript" src="./pannellum.js"></script>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+        }
+
+        #logo {
+            position: absolute;
+            top: 1rem;
+            bottom: auto;
+            left: 1rem;
+            right: auto;
+            z-index: 3;
+            background: url(https://dils.com/wp-content/uploads/2021/12/Logo-DILS-White-74.png) center no-repeat transparent;
+            height: 30px;
+            width: 100px;
+            background-size: contain;
+        }
+
+        #panorama {
+            width: 800px;
+            height: 400px;
+        }
+
+        .pnlm-container {
+            background: #000 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAC0SURBVHgB7ZY9C8MgEIbfNIV8kCFZM+b//6asjg6KIogtOhRKg9JozHIPuByHj+LdYQPghRt44CZITOLLeOIEfd9jXddk3r7vKCq21oJzjtjBhmGIbXGNeFmWPPG2bYdxrTUYY8gheWOlFKSUXzHnHHJJio0xP+IS0ACpxql2OsK3zzzPodqFEKHyq4jbtv30ru9zv2JQcVUj+cZd12GaplRacjb/LR7HMazSNKDvLYlJXIg3ks41KV+L92AAAAAASUVORK5CYII=") repeat;
+        }
+
+        .custom-hotspot {
+            height: 50px;
+            width: 50px;
+            background: #f00;
+        }
+
+        .pnlm-controls-container,
+        .pnlm-about-msg {
+            display: none !important;
+        }
+
+        .pnlm-controls {
+            background-color: rgba(255, 255, 255, 0.4);
+            border: none;
+        }
+
+        .pnlm-panorama-info {
+            bottom: 0.8rem;
+        }
+
+        .pnlm-title-box {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.4rem 0.2rem 1rem;
+        }
+
+        div.custom-tooltip span {
+            visibility: hidden;
+            position: absolute;
+            border-radius: 3px;
+            background-color: #fff;
+            color: #000;
+            text-align: center;
+            max-width: 300px;
+            padding: 5px 10px;
+            margin-left: -220px;
+            cursor: default;
+        }
+
+        div.custom-tooltip:hover span {
+            visibility: visible;
+        }
+
+        div.custom-tooltip:hover span:after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-width: 10px;
+            border-style: solid;
+            border-color: #fff transparent transparent transparent;
+            bottom: -20px;
+            left: -10px;
+            margin: 0 50%;
+        }
+
+        div.pnlm-tooltip span {
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .pnlm-hotspot.pnlm-scene {
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAIeSURBVHgB7ZmBTcNADEVdxAAZ4TYgG5AN6AZkA8oEsAFsQDcAJkg3aJngygQpExifcm1/3IRWbdQ6KE+y6vgukn3xOb6UaGBgYODfwcyJyJOI54pS5F3EkXWCkyILbmdClhEHp7yfjCwijqV6tWM6hacyB3tBFokOr3lTYxhcSR1xRd2SgP6DA6PRaNEy7yS6DmAJ+l1In/WF6A8wtiCLxHwvIVW8yHMsof2oROJczn/jyToxCN/gfIFp1QUj6pBQLmWzLqMeHM1EUpGVyELGZmSRsEFV7oeVfo1lNSPLiIP3vB9vMhCuXk4lH0bZdf6fBFftgVer7Lj+Ni7VnJys0OR8tH+APQTzDNdvZIGQz2qVUxjDpi3Tc8kCXE+TD7AnYGew4z7JqEOO7YUc6NjXpKDPQP8EvQip1FUgxwZwA/oM9Az0L9Cn9dsppyoQz9XR09E5USnhwF6AfazuGav9geR0LlSel2qsMTA1J7w7plyvYo6O5JqO41HkVuQbHHO0Pais1j2RJh5s8nhP+E3a5p4V9WQCtr8+NMFVA7dJL+7DdyAkPgXM7Tn1Dd79tPJCfSCWySTqExVERtbhqol7h+sCAvBsqZVugrfvgEm8dqxOaWQVrtqBzWqDPTNfWuNKI69qXJfWlKzQUDZ9y5y5yf0QSqRaXdcyT++Hy5dW3v0CN9kzX5fWMV0K3j3QH3TW5fqfH/1rNQYGBgZ2+AU7SHMVFsc6+QAAAABJRU5ErkJggg==");
+            background-color: black;
+            background-size: 80%;
+            background-position: center;
+            border-radius: 100px;
+            box-shadow: 0 0 0 2px #111;
+            height: 40px;
+            width: 40px;
+
+            /* &:hover {
+                box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.4);
+                // transition: all 0.4s ease-in-out;
+            } */
+        }
+
+        #controls {
+            position: absolute;
+            top: auto;
+            bottom: 0.6rem;
+            left: auto;
+            right: 4.4rem;
+            z-index: 2;
+
+            .ctrl {
+                padding: 2px 0 0 0;
+                width: 50px;
+                height: 48px;
+                text-align: center;
+                font-size: 2rem;
+                background: rgba(255, 255, 255, 0.4);
+                display: inline-block;
+                cursor: pointer;
+            }
+
+            .ctrl:hover {
+                background: rgba(255, 255, 255, 1);
+            }
+
+            #fullscreen {
+                border-radius: 100px;
+            }
+        }
+
+        .pnlm-compass {
+            bottom: 0.6rem;
+            right: 0.6rem;
+            filter: invert(1);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="logo"></div>
+
+    <div id="panorama" style="position: relative;">
+        <canvas id="panorama-cvs" width="800" height="400" style="position: absolute;z-index: 1;"></canvas>
+        <div id="controls">
+            <!-- <div class="ctrl" id="pan-up">&#9650;</div>
+		<div class="ctrl" id="pan-down">&#9660;</div>
+		<div class="ctrl" id="pan-left">&#9664;</div>
+		<div class="ctrl" id="pan-right">&#9654;</div>
+		<div class="ctrl" id="zoom-in">&plus;</div>
+		<div class="ctrl" id="zoom-out">&minus;</div> -->
+            <div class="ctrl" id="fullscreen">&#x2922;</div>
+        </div>
+    </div>
+    <div>
+        <canvas id="origin" width="800" height="400"></canvas>
+    </div>
+    <script>
+
+        //example segment map data
+        var pointData = {}
+        for (let i = 7100; i < 7300; i++)
+            for (let j = 2100; j < 2300; j++) {
+                pointData[`${i},${j}`] = '1'
+            }
+        for (let i = 7100; i < 7300; i++)
+            for (let j = 2400; j < 2600; j++) {
+                pointData[`${i},${j}`] = '2'
+            }
+
+
+        ////////////////////coordinate conversion section
+        function panorama2origin(pitch, yaw) {
+            var x = (yaw / 360 + 0.5) * 8000;
+            var y = (pitch / 180 + 0.5) * 4000;
+            return [x, y]
+        }
+
+        function origin2panorama(x, y) {
+            var yaw = (x / 8000 - 0.5) * 360;
+            var pitch = (y / 4000 - 0.5) * 180;
+            return [pitch, yaw];
+        }
+
+        function coordsToPos(pitch, yaw, config) {
+            var hsPitchSin = Math.sin(pitch * Math.PI / 180),
+                hsPitchCos = Math.cos(pitch * Math.PI / 180),
+                configPitchSin = Math.sin(config.pitch * Math.PI / 180),
+                configPitchCos = Math.cos(config.pitch * Math.PI / 180),
+                yawCos = Math.cos((-yaw + config.yaw) * Math.PI / 180);
+            var z = hsPitchSin * configPitchSin + hsPitchCos * yawCos * configPitchCos;
+            var yawSin = Math.sin((-yaw + config.yaw) * Math.PI / 180),
+                hfovTan = Math.tan(config.hfov * Math.PI / 360);
+            var canvasWidth = 800,
+                canvasHeight = 600;
+            var coord = [-canvasWidth / hfovTan * yawSin * hsPitchCos / z / 2,
+            -canvasWidth / hfovTan * (hsPitchSin * configPitchCos -
+                hsPitchCos * yawCos * configPitchSin) / z / 2];
+            // Apply roll
+            var rollSin = Math.sin(config.roll * Math.PI / 180),
+                rollCos = Math.cos(config.roll * Math.PI / 180);
+            coord = [coord[0] * rollCos - coord[1] * rollSin,
+            coord[0] * rollSin + coord[1] * rollCos];
+            // Apply transform
+            coord[0] += (canvasWidth - 0) / 2;
+            coord[1] += (canvasHeight - 0) / 2;
+            var transform = 'translate(' + coord[0] + 'px, ' + coord[1] +
+                'px) translateZ(9999px) rotate(' + config.roll + 'deg)';
+            return { x: coord[0], y: coord[1] - 100 }
+        }
+
+        ////////////////////canvas initialize section
+        var cvs = document.getElementById("origin")
+        var context = cvs.getContext("2d");
+        var img = new Image();
+        img.onload = function () {
+            context.drawImage(img, 0, 0, cvs.width, cvs.height);
+        };
+
+        img.src = 'https://www.marcogargano.it/Arrr3D/dils/office13.jpg';
+
+        var panorama_cvs = document.getElementById("panorama-cvs")
+        var panorama_context = panorama_cvs.getContext("2d");
+
+        ////////////////////Panorama section
+        // Create viewer
+        viewer = pannellum.viewer("panorama", {
+            // preview: "https://www.marcogargano.it/Arrr3D/office13.jpg",
+            autoLoad: true,
+            autoRotate: -2,
+            pitch: 1,
+            yaw: -135,
+            hfov: 120,
+            compass: true,
+            default: {
+                firstScene: "Piano13",
+                sceneFadeDuration: 1000
+            },
+
+            scenes: {
+                Piano13: {
+                    title: "Piano 13",
+                    hfov: 110,
+                    pitch: 1,
+                    yaw: 0,
+                    type: "equirectangular",
+                    panorama: "https://www.marcogargano.it/Arrr3D/dils/office13.jpg",
+                    hotSpots: [
+                        {
+                            pitch: -10,
+                            yaw: 255,
+                            type: "scene",
+                            text: "Piano 8",
+                            sceneId: "Piano8",
+                            targetYaw: 320,
+                            targetPitch: 1
+                        }
+                    ]
+                },
+
+                Piano8: {
+                    title: "Piano 8",
+                    pitch: 1,
+                    hfov: 180,
+                    yaw: 120,
+                    type: "equirectangular",
+                    panorama: "https://www.marcogargano.it/Arrr3D/dils/office8.jpg",
+                    hotSpots: [
+                        {
+                            pitch: 1,
+                            yaw: 315,
+                            type: "scene",
+                            text: "Piano 13",
+                            sceneId: "Piano13",
+                            targetYaw: 260,
+                            targetPitch: 1
+                        }
+                    ]
+                }
+            }
+        });
+
+        viewer.on('load', function () {
+            var container = document.getElementById('panorama');
+            container.addEventListener('mousemove', function (e) {
+                var rect = e.target.getBoundingClientRect();
+                var x = e.clientX - rect.left; //x position within the element.
+                var y = e.clientY - rect.top;  //y position within the element.
+                const [pitch, yaw] = viewer.mouseEventToCoords(event)
+                var [x, y] = panorama2origin(pitch, yaw)
+                x = Math.floor(x)
+                y = Math.floor(y)
+                panorama_context.clearRect(0, 0, panorama_cvs.width, panorama_cvs.height)
+                if (pointData[`${x},${y}`]) {
+                    viewer.stopMovement()
+                    if (pointData[`${x},${y}`] == '1') {
+                        panorama_context.fillStyle = "red"
+                        context.fillStyle = "red"
+                    }
+                    if (pointData[`${x},${y}`] == '2') {
+                        panorama_context.fillStyle = "blue"
+                        context.fillStyle = "blue"
+                    }
+                    let filteredKeys = Object.keys(pointData).filter(key => pointData[key] === pointData[`${x},${y}`]);
+                    filteredKeys.forEach(key => {
+                        var point = {
+                            x: key.split(",")[0],
+                            y: key.split(",")[1]
+                        }
+                        var [_pitch, _yaw] = origin2panorama(point.x, point.y);
+                        var pos = coordsToPos(_pitch, _yaw, viewer.getConfig())
+                        context.fillRect(point.x / 10, (4000 - point.y) / 10, 1, 1);
+                        panorama_context.fillRect(pos.x, pos.y, 1, 1)
+                    });
+
+                }
+                else panorama_context.clearRect(0, 0, panorama_cvs.width, panorama_cvs.height)
+            });
+
+            // container.addEventListener('mousedown', function (e) {
+            //     var rect = e.target.getBoundingClientRect();
+            //     var x = e.clientX - rect.left; //x position within the element.
+            //     var y = e.clientY - rect.top;  //y position within the element.
+            //     const [pitch, yaw] = viewer.mouseEventToCoords(event)
+            //     var [x, y] = panorama2origin(pitch, yaw)
+            //     context.fillRect(x / 10, (4000 - y) / 10, 2, 2);
+            // });
+
+        });
+        // Hot spot creation function
+        function hotspot(hotSpotDiv, args) {
+            hotSpotDiv.classList.add("custom-tooltip");
+            var span = document.createElement("span");
+            span.innerHTML = args;
+            hotSpotDiv.appendChild(span);
+            span.style.width = span.scrollWidth - 20 + "px";
+            span.style.marginLeft =
+                -(span.scrollWidth - hotSpotDiv.offsetWidth) / 2 + "px";
+            span.style.marginTop = -span.scrollHeight - 12 + "px";
+        }
+
+        document.getElementById("fullscreen").addEventListener("click", function (e) {
+            viewer.toggleFullscreen();
+        });
+
+
+
+    </script>
+</body>
+
+</html>
